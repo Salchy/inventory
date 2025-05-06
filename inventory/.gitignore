@@ -1,0 +1,14 @@
+# Ignorar configuración local de Visual Studio
+.vs/
+*.user
+*.suo
+
+# Ignorar binarios y compilados
+bin/
+obj/
+*.exe
+*.dll
+
+# Ignorar archivos de paquetes y dependencias
+packages/
+*.nupkg
