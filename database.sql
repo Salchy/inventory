@@ -1,0 +1,62 @@
+CREATE DATABASE Inventory;
+GO
+Use Inventory;a
+GO
+
+CREATE TABLE Toners (
+	IDtoner INT PRIMARY KEY IDENTITY(1, 1),
+	Nombre NVARCHAR(100) NOT NULL,
+	Cantidad INT NOT NULL,
+)
+GO
+
+CREATE TABLE Marcas (
+	IDmarca INT PRIMARY KEY IDENTITY(1, 1),
+	Nombre NVARCHAR(100),
+)
+GO
+
+CREATE TABLE Areas (
+	IDarea INT PRIMARY KEY IDENTITY(1, 1),
+	Nombre NVARCHAR(100),
+)
+GO
+
+CREATE TABLE EntradasToner (
+	IDentrada INT PRIMARY KEY IDENTITY(1, 1),
+	IDtoner INT NOT NULL,
+	Fecha DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
+	Cantidad INT NOT NULL DEFAULT(1),
+
+	-- FOREIGN KEY (IDtoner) REFERENCES Toners(IDtoner), -- Creo que no hace falta esta relación 
+)
+GO
+
+CREATE TABLE Impresoras (
+	IDimpresora INT PRIMARY KEY IDENTITY(1, 1),
+	IDmarca INT NOT NULL,
+	IDarea INT NOT NULL DEFAULT(1),
+	Nombre NVARCHAR(100),
+
+	FOREIGN KEY (IDmarca) REFERENCES Marcas(IDmarca),
+	FOREIGN KEY (IDarea) REFERENCES Areas(IDarea),
+)
+GO
+
+CREATE TABLE TonersImpresoras (
+	IDimpresora INT NOT NULL,
+	IDtoner INT NOT NULL
+
+	PRIMARY KEY (IDimpresora, IDtoner),
+	FOREIGN KEY (IDimpresora) REFERENCES Impresoras(IDimpresora),
+	FOREIGN KEY (IDtoner) REFERENCES Toners(IDtoner),
+)
+GO
+
+CREATE TABLE CambiosToner (
+	IDcambio INT PRIMARY KEY IDENTITY(1, 1),
+	IDimpresora INT NOT NULL,
+	IDtoner INT NOT NULL,
+	Fecha DATE NOT NULL DEFAULT(CAST(GETDATE() AS DATE)),
+)
+GO
